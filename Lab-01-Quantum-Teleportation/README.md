@@ -1,3 +1,7 @@
+# Aim
+
+To simulate the quantum teleportation protocol using Qiskit and verify that an unknown quantum state can be transferred from one qubit to another through quantum entanglement and classical communication.
+
 # Objectives
 
 1. Create an entangled Bell pair.
@@ -36,11 +40,11 @@ Three qubits are required:
 
 The information qubit is prepared as:
 
-∣ψ⟩=α∣0⟩+β∣1⟩
+|0⟩
 
 For simplicity:
 
-∣ψ⟩=(∣0⟩+∣1⟩)/√2
+(∣0⟩+∣1⟩)/√2
 
 ---
 
@@ -65,7 +69,7 @@ Entangle the information qubit with Alice's qubit.
 
 Apply:
 
-- CNOT(q0,q2)
+- CNOT(q2,q0)
 
 ---
 
@@ -108,3 +112,210 @@ Bob's qubit now becomes:
 ∣ψ⟩
 
 which is the original quantum state.
+
+# Software Required
+
+### Python Packages
+
+pip install qiskit
+pip install qiskit-aer
+pip install matplotlib
+
+# Methodology
+
+## Part A: Circuit Construction
+
+### Step 1
+
+Import the required Python libraries.
+
+```python
+from qiskit import QuantumCircuit
+from qiskit_aer import AerSimulator
+from qiskit.quantum_info import Statevector
+```
+
+---
+
+### Step 2
+
+Create a quantum circuit with three qubits and two classical bits.
+
+```python
+qc = QuantumCircuit(3,2)
+```
+
+---
+
+### Step 3
+
+Generate an entangled Bell pair between Alice's and Bob's qubits.
+
+```python
+qc.h(0)
+qc.cx(0,1)
+qc.barrier()
+```
+
+---
+
+### Step 4
+
+Perform the Bell-state measurement.
+
+```python
+qc.cx(2,0)
+qc.h(2)
+qc.barrier()
+```
+
+---
+
+### Step 5
+
+Measure Alice's qubits.
+
+```python
+qc.measure(0,0)
+qc.measure(2,1)
+qc.barrier()
+```
+
+---
+
+### Step 6
+
+Apply Bob's conditional correction operations.
+
+```python
+with qc.if_test((0,1)):
+    qc.x(1)
+
+with qc.if_test((1,1)):
+    qc.z(1)
+
+qc.barrier()
+```
+
+---
+
+### Step 7
+
+Measure all qubits and display the circuit.
+
+```python
+qc.measure_all()
+qc.draw()
+```
+
+---
+
+# Code
+
+```python
+from qiskit import QuantumCircuit
+from qiskit_aer import AerSimulator
+from qiskit.quantum_info import Statevector
+
+qc = QuantumCircuit(3,2)
+
+qc.h(0)
+qc.cx(0,1)
+qc.barrier()
+
+qc.cx(2,0)
+qc.h(2)
+qc.barrier()
+
+qc.measure(0,0)
+qc.measure(2,1)
+qc.barrier()
+
+with qc.if_test((0,1)):
+    qc.x(1)
+
+with qc.if_test((1,1)):
+    qc.z(1)
+
+qc.barrier()
+
+qc.measure_all()
+
+qc.draw()
+```
+
+---
+
+# Circuit Diagram
+
+<img width="1312" height="350" alt="image-11" src="https://github.com/user-attachments/assets/570ce7fd-9cfb-41be-95c8-8451bde1846d" />
+
+
+---
+
+# Observation
+
+The generated circuit successfully demonstrates the implementation of the quantum teleportation protocol using Qiskit.
+
+The circuit contains:
+
+- Bell pair generation using Hadamard and CNOT gates.
+- Bell-state measurement.
+- Classical communication through two classical bits.
+- Conditional X and Z correction gates.
+- Final measurement of all qubits.
+
+Since no arbitrary quantum state was prepared on the information qubit, the protocol teleports the default state **|0⟩**.
+
+---
+
+# Result
+
+The quantum teleportation circuit was successfully implemented in Qiskit.
+
+The simulation correctly generated:
+
+- An entangled Bell pair.
+- Bell-state measurements.
+- Classical feed-forward corrections.
+- Teleportation of the default quantum state **|0⟩**.
+
+---
+
+# Conclusion
+
+This experiment demonstrates the basic working principle of quantum teleportation. The protocol shows that a quantum state can be transferred from one qubit to another using shared entanglement and classical communication without physically transmitting the original qubit.
+
+This implementation serves as the foundation for future experiments involving arbitrary quantum states, teleportation fidelity analysis, noisy quantum channels, and execution on IBM Quantum hardware.
+
+---
+
+# Future Work
+
+- Teleport arbitrary quantum states.
+- Verify teleportation using statevector comparison.
+- Calculate teleportation fidelity.
+- Simulate noisy quantum channels.
+- Execute the circuit on IBM Quantum hardware.
+- Extend the protocol to entanglement swapping and quantum repeaters.
+
+---
+
+# References
+
+1. C. H. Bennett et al., "Teleporting an Unknown Quantum State via Dual Classical and Einstein-Podolsky-Rosen Channels," *Physical Review Letters*, 70, 1895–1899 (1993).
+
+2. IBM Quantum Learning – Quantum Teleportation.
+
+3. Qiskit Documentation.
+
+4. M. A. Nielsen and I. L. Chuang, *Quantum Computation and Quantum Information*, Cambridge University Press.
+
+
+# What I Learned
+
+- How Bell pairs are created using Hadamard and CNOT gates.
+- The role of Bell-state measurements in quantum teleportation.
+- How classical bits control conditional quantum operations in Qiskit.
+- The importance of classical communication in completing the teleportation protocol.
+- How to implement conditional gates using `if_test()` in modern Qiskit.

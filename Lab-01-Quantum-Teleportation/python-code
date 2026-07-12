@@ -1,0 +1,24 @@
+from qiskit import QuantumCircuit
+from qiskit_aer import AerSimulator
+from qiskit.quantum_info import Statevector
+
+qc = QuantumCircuit(3,2) #QuantumCircuit(number_of_qubits, number_of_classical_bits)
+
+qc.h(0) #Apply a Hadamard gate
+qc.cx(0,1) #Apply a Controlled-X gate.
+qc.barrier()
+
+qc.cx(2,0) 
+qc.h(2)
+qc.barrier()
+
+with qc.if_test((0, 1)):
+qc.x(1)
+
+with qc.if_test((1, 1)):
+qc.z(1)
+qc.barrier()
+
+qc.measure_all()
+qc.draw()
+

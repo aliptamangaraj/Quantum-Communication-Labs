@@ -1,6 +1,6 @@
 # Aim
 
-To simulate the quantum teleportation protocol using Qiskit and verify that an unknown quantum state can be transferred from one qubit to another through quantum entanglement and classical communication.
+To implement the quantum teleportation protocol using Qiskit and demonstrate the teleportation of the default quantum state ∣0⟩ using quantum entanglement and classical communication.
 
 # Objectives
 
@@ -9,6 +9,7 @@ To simulate the quantum teleportation protocol using Qiskit and verify that an u
 3. Apply classical feed-forward corrections.
 4. Simulate teleportation of the default state ∣0⟩.
 5. Visualize the quantum circuit.
+6. Understand the role of entanglement and classical communication in quantum teleportation.
 
 # Theory
 
@@ -29,7 +30,6 @@ Charles Bennett and collaborators in 1993.
 
 Three qubits are required:
 
-| Qubit | Purpose |
 | q0 | Alice's entangled qubit |
 | q1 | Bob's entangled qubit |
 | q2 | Information qubit |
@@ -51,6 +51,8 @@ For simplicity:
 ## Bell Pair Generation
 
 Create entanglement between q0 and q1.
+Alice owns q0.
+Bob owns q1.
 
 Apply:
 
@@ -99,8 +101,8 @@ Bob applies corrective operations.
 
 | Measurement | Operation |
     00            None 
-    01             X 
-    10             Z
+    01             Z 
+    10             X
     11            XZ 
 
 ---
@@ -115,11 +117,11 @@ which is the original quantum state.
 
 # Software Required
 
-### Python Packages
+Python 3.12
+Qiskit
+Qiskit Aer
+Matplotlib
 
-pip install qiskit
-pip install qiskit-aer
-pip install matplotlib
 
 # Methodology
 
@@ -129,11 +131,9 @@ pip install matplotlib
 
 Import the required Python libraries.
 
-```python
 from qiskit import QuantumCircuit
 from qiskit_aer import AerSimulator
 from qiskit.quantum_info import Statevector
-```
 
 ---
 
@@ -141,21 +141,17 @@ from qiskit.quantum_info import Statevector
 
 Create a quantum circuit with three qubits and two classical bits.
 
-```python
-qc = QuantumCircuit(3,2)
-```
+qc = QuantumCircuit(3,2) #QuantumCircuit(number_of_qubits, number_of_classical_bits)
 
 ---
 
 ### Step 3
 
-Generate an entangled Bell pair between Alice's and Bob's qubits.
+Create an entangled Bell pair shared between Alice and Bob to establish the quantum channel required for teleportation.
 
-```python
-qc.h(0)
-qc.cx(0,1)
+qc.h(0) #Apply a Hadamard gate
+qc.cx(0,1) #Apply a Controlled-X gate.
 qc.barrier()
-```
 
 ---
 
@@ -163,50 +159,30 @@ qc.barrier()
 
 Perform the Bell-state measurement.
 
-```python
-qc.cx(2,0)
+qc.cx(2,0) 
 qc.h(2)
 qc.barrier()
-```
 
 ---
 
 ### Step 5
 
-Measure Alice's qubits.
+Apply Bob's conditional correction operations.
 
-```python
-qc.measure(0,0)
-qc.measure(2,1)
+with qc.if_test((0, 1)):
+qc.x(1)
+with qc.if_test((1, 1)):
+qc.z(1)
 qc.barrier()
-```
 
 ---
 
 ### Step 6
 
-Apply Bob's conditional correction operations.
-
-```python
-with qc.if_test((0,1)):
-    qc.x(1)
-
-with qc.if_test((1,1)):
-    qc.z(1)
-
-qc.barrier()
-```
-
----
-
-### Step 7
-
 Measure all qubits and display the circuit.
 
-```python
 qc.measure_all()
 qc.draw()
-```
 
 ---
 
@@ -227,9 +203,6 @@ qc.cx(2,0)
 qc.h(2)
 qc.barrier()
 
-qc.measure(0,0)
-qc.measure(2,1)
-qc.barrier()
 
 with qc.if_test((0,1)):
     qc.x(1)
@@ -284,7 +257,10 @@ The simulation correctly generated:
 
 # Conclusion
 
-This experiment demonstrates the basic working principle of quantum teleportation. The protocol shows that a quantum state can be transferred from one qubit to another using shared entanglement and classical communication without physically transmitting the original qubit.
+This experiment demonstrated the fundamental working principle of quantum teleportation.
+
+Although only the default quantum state was teleported, the protocol establishes the foundation for future experiments involving arbitrary quantum states, teleportation fidelity, and quantum networking.
+The protocol shows that a quantum state can be transferred from one qubit to another using shared entanglement and classical communication without physically transmitting the original qubit.
 
 This implementation serves as the foundation for future experiments involving arbitrary quantum states, teleportation fidelity analysis, noisy quantum channels, and execution on IBM Quantum hardware.
 

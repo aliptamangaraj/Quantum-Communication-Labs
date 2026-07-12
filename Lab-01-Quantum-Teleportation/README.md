@@ -1,15 +1,10 @@
-# Aim
-
-To simulate the quantum teleportation protocol using Qiskit and verify that an unknown quantum state can be transferred from one qubit to another through quantum entanglement and classical communication.
-
 # Objectives
 
 1. Create an entangled Bell pair.
-2. Prepare an arbitrary quantum state.
-3. Perform Bell-state measurements.
-4. Transfer the quantum information to a distant qubit.
-5. Verify successful teleportation through statevector comparison.
-6. Analyze the effect of noise on teleportation fidelity.
+2. Perform Bell-state measurement.
+3. Apply classical feed-forward corrections.
+4. Simulate teleportation of the default state ∣0⟩.
+5. Visualize the quantum circuit.
 
 # Theory
 
@@ -31,10 +26,9 @@ Charles Bennett and collaborators in 1993.
 Three qubits are required:
 
 | Qubit | Purpose |
-| --- | --- |
-| q0 | Information qubit |
-| q1 | Alice's entangled qubit |
-| q2 | Bob's entangled qubit |
+| q0 | Alice's entangled qubit |
+| q1 | Bob's entangled qubit |
+| q2 | Information qubit |
 
 ---
 
@@ -46,13 +40,13 @@ The information qubit is prepared as:
 
 For simplicity:
 
-∣ψ⟩=(∣0⟩+∣1⟩)/root2
+∣ψ⟩=(∣0⟩+∣1⟩)/√2
 
 ---
 
 ## Bell Pair Generation
 
-Create entanglement between q1 and q2.
+Create entanglement between q0 and q1.
 
 Apply:
 
@@ -61,7 +55,7 @@ Apply:
 
 Result:
 
-∣Φ+⟩=(∣00⟩+∣11⟩)/root2
+∣Φ+⟩=(∣00⟩+∣11⟩)/√2
 
 # Teleportation Protocol
 
@@ -71,19 +65,19 @@ Entangle the information qubit with Alice's qubit.
 
 Apply:
 
-- CNOT(q0,q1)
+- CNOT(q0,q2)
 
 ---
 
 ### Step 2
 
-Apply a Hadamard to q0.
+Apply a Hadamard to q2.
 
 ---
 
 ### Step 3
 
-Measure q0 and q1.
+Measure q2 and q0.
 
 Alice obtains two classical bits.
 

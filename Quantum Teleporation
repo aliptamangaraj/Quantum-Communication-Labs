@@ -1,0 +1,24 @@
+Lab 01 – Quantum Teleportation (Default State)
+
+Objective-
+To simulate the quantum teleportation protocol using Qiskit.
+
+Topics Covered-
+- Bell Pair Generation
+- Quantum Entanglement
+- Bell-State Measurement
+- Classical Feedforward
+- Conditional Gates (if_test)
+
+Tools-
+- Python
+- Qiskit
+- Qiskit Aer
+
+Files-
+- teleportation.py
+- Quantum_Teleportation_Report.pdf
+- circuit.png
+
+Status-
+Completed

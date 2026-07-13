@@ -203,6 +203,8 @@ qc.cx(2,0)
 qc.h(2)
 qc.barrier()
 
+qc.measure(0, 0) 
+qc.measure(1, 1)
 
 with qc.if_test((0,1)):
     qc.x(1)

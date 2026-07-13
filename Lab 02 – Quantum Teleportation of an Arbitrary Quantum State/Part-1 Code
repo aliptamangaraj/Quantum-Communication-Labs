@@ -1,0 +1,44 @@
+from qiskit import QuantumCircuit
+from qiskit.quantum_info import (
+    Statevector,
+    DensityMatrix,
+    partial_trace,
+    state_fidelity
+)
+
+from qiskit_aer import AerSimulator
+
+import numpy as np
+
+alpha = np.sqrt(0.3)
+beta = np.sqrt(0.7)
+
+psi = Statevector([alpha, beta])
+
+print(psi)
+
+qc = QuantumCircuit(3,2)
+
+# Unknown state
+qc.initialize(psi.data,0)
+
+# Bell Pair
+qc.h(1)
+qc.cx(1,2)
+
+# Bell Measurement Operations
+qc.cx(0,1)
+qc.h(0)
+
+qc.measure(0, 0) 
+qc.measure(1, 1)
+
+with qc.if_test((1, 1)):
+qc.x(2)
+
+with qc.if_test((0, 1)):
+qc.z(2)
+qc.barrier()
+
+qc.measure_all()
+qc.draw()

@@ -146,14 +146,11 @@ print(psi)
 
 qc = QuantumCircuit(3,2)
 
-# Unknown state
 qc.initialize(psi.data,0)
 
-# Bell Pair
 qc.h(1)
 qc.cx(1,2)
 
-# Bell Measurement Operations
 qc.cx(0,1)
 qc.h(0)
 
@@ -183,10 +180,6 @@ from qiskit.quantum_info import (
 )
 import numpy as np
 
-# ----------------------------------------------------
-# Prepare an arbitrary state
-# ----------------------------------------------------
-
 alpha = np.sqrt(0.3)
 beta = np.sqrt(0.7)
 
@@ -196,44 +189,27 @@ print("Original State")
 print(psi)
 print()
 
-# ----------------------------------------------------
-# Teleportation circuit (without measurements)
-# ----------------------------------------------------
-
 qc = QuantumCircuit(3)
 
-# Unknown state on qubit 0
 qc.initialize(psi.data, 0)
 
-# Bell pair between qubit 1 and 2
 qc.h(1)
 qc.cx(1, 2)
 
-# Bell measurement operations
 qc.cx(0, 1)
 qc.h(0)
 
-# State after Bell measurement operations
 state = Statevector.from_instruction(qc)
 
 print("Three-Qubit State")
 print(state)
 print()
 
-# ----------------------------------------------------
-# Project onto measurement outcome |00>
-# ----------------------------------------------------
-
-# Amplitudes corresponding to Alice = |00>
-# Basis ordering:
-# |000>,|001>,|010>,|011>,|100>,|101>,|110>,|111>
-
 amps = np.array([
     state.data[0],
     state.data[1]
 ])
 
-# Normalize Bob's state
 amps = amps / np.linalg.norm(amps)
 
 bob_state = Statevector(amps)
@@ -242,19 +218,11 @@ print("Bob State (Measurement Outcome = 00)")
 print(bob_state)
 print()
 
-# ----------------------------------------------------
-# Density Matrix
-# ----------------------------------------------------
-
 bob_density = DensityMatrix(bob_state)
 
 print("Bob Density Matrix")
 print(bob_density)
 print()
-
-# ----------------------------------------------------
-# Fidelity
-# ----------------------------------------------------
 
 fidelity = state_fidelity(psi, bob_density)
 

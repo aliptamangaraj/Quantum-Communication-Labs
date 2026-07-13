@@ -223,7 +223,8 @@ qc.draw()
 
 # Circuit Diagram
 
-<img width="1312" height="350" alt="image-11" src="https://github.com/user-attachments/assets/570ce7fd-9cfb-41be-95c8-8451bde1846d" />
+<img width="975" height="235" alt="image" src="https://github.com/user-attachments/assets/16774d55-3a68-4bb1-99f6-b8867ed1e25a" />
+
 
 
 ---

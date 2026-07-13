@@ -167,6 +167,15 @@ qc.barrier()
 
 ### Step 5
 
+Measure Alice's two qubits.
+
+qc.measure(0, 0) 
+qc.measure(1, 1)
+
+---
+
+### Step 6
+
 Apply Bob's conditional correction operations.
 
 with qc.if_test((0, 1)):
@@ -177,7 +186,7 @@ qc.barrier()
 
 ---
 
-### Step 6
+### Step 7
 
 Measure all qubits and display the circuit.
 

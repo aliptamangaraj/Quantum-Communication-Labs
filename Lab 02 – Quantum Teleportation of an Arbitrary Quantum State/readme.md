@@ -125,6 +125,7 @@ compares it with the original state using fidelity.
 
 ### Code:
 
+```python
 from qiskit import QuantumCircuit
 from qiskit.quantum_info import (
     Statevector,
@@ -166,11 +167,13 @@ qc.barrier()
 
 qc.measure_all()
 qc.draw()
+```
 
 ## Fidelity Verification
 
 ### The second program:
 
+```python
 from qiskit import QuantumCircuit
 from qiskit.quantum_info import (
     Statevector,
@@ -228,7 +231,7 @@ fidelity = state_fidelity(psi, bob_density)
 
 print("Teleportation Fidelity")
 print(fidelity)
-
+```
 
 1. prepares the same unknown state,
 2. performs teleportation without measurements,

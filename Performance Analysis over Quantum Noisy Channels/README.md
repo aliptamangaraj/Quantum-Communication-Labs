@@ -1,3 +1,5 @@
+This project implements the quantum teleportation protocol using Qiskit and evaluates its performance under different quantum noise models. The simulation includes Bell-state preparation, quantum state teleportation, noisy channel modeling, and fidelity analysis using Qiskit Aer Simulator. Future work includes comparative analysis of multiple error mitigation techniques and visualization improvements.
+
 ```
 import numpy as np
 from qiskit import QuantumCircuit
